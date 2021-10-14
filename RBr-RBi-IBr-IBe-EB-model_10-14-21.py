@@ -105,7 +105,7 @@ def sigRateCL(): #Add
 time = 0
 def update(cells):
     global time
-    global n0 #whats this and why global?
+    #global n0 #whats this and why global?
     time += 1
     time2 = (time/10) 
     print('time = ' + str(time))
@@ -161,10 +161,6 @@ def update(cells):
         if cell.cellType == 1: #RBr
         	
         	#I guess you are using RNA->protein to do your math?
-        	#geneamt[0] is labeled "extra" but used cell color?  Don't understand. Lable extra in a meaningful way.
-        	
-            cell.rnaamt[0] = cell.rnaamt[0] + (pr0 * cell.growthRate) - (nr0 * cell.rnaamt[0] * cell.growthRate) #extra RNA
-            cell.geneamt[0] = cell.geneamt[0] + (p0 * cell.growthRate * cell.rnaamt[0]) - (n0 * cell.growthRate * cell.geneamt[0]) #extra protein
             
             cell.rnaamt[1] = cell.rnaamt[1] + (pr1 * cell.growthRate) - (nr1 * cell.rnaamt[1] * cell.growthRate) #Euo RNA
             cell.geneamt[1] = cell.geneamt[1] + (p1 * cell.growthRate * cell.rnaamt[1]) - (n1 * cell.growthRate * cell.geneamt[1]) #Euo protein
@@ -172,7 +168,7 @@ def update(cells):
             cell.geneamt[2] = 0 # HctA protein
            
             cell.geneamt[3] = 0 # HctB protein
-            cell.color = [[1/cell.geneamt[0], 1, 1/cell.geneamt[0]]]
+            cell.color = [[1/cell.geneamt[1], 1, 1/cell.geneamt[1]]]
             #print('growthRate = ' + str(cell.growthRate))
             #print('percentchance = ' + str(cell.percentchance[0]))
             print('RBe Trigger Value = ' + str(cell.percentchance[1]))
