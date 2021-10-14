@@ -198,13 +198,13 @@ def update(cells):
             cell.rnaamt[3] = cell.rnaamt[3] + (pr3 * cell.parentGrowth[0])  - (nr3 * cell.rnaamt[3]) #hctB RNA
             cell.geneamt[3] = cell.geneamt[3] + (p3 * cell.parentGrowth[0] * cell.rnaamt[3])  - (n3 * cell.parentGrowth[0] * cell.geneamt[3]) #hctB protein
             
-            cell.growthRate = 0 # does cell type 3 grow? probably not. Move this up to cell type 3
+            cell.growthRate = 0 # does cell type 3 grow? probably not. Move this up to cell type 3, see if needed
             cell.color = [[0, 0, cell.geneamt[3]/100]] #need to fix color
             if cell.geneamt[3] >= 15: #hctB protein
                 cell.cellType = 5 #EB
                     
         if cell.cellType == 5: #EB
-            cell.geneamt[2] = cell.geneamt[2] - (n2 * cell.parentGrowth[0] * cell.geneamt[2]) #hctA deg. does this continue the degradation? change rates? why is this here again?
+            cell.geneamt[2] = cell.geneamt[2] - (n2 * cell.parentGrowth[0] * cell.geneamt[2]) #hctA deg. does this continue the degradation? change rates? why is this here again? see if needed
             
             cell.rnaamt[3] = cell.rnaamt[3] + (pr3 * cell.parentGrowth[0])  - (nr3 * cell.rnaamt[3]) #hctB RNA
             cell.geneamt[3] = cell.geneamt[3] + (p3 * cell.parentGrowth[0] * cell.rnaamt[3])  - (n3 * cell.parentGrowth[0] * cell.geneamt[3]) #hctB protein
