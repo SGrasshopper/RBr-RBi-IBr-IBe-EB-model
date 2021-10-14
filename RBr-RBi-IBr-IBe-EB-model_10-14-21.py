@@ -127,7 +127,6 @@ def update(cells):
         # add if statement controlling rates based on time
         #pr = RNA production rate
         #nr = RNA degradation rate
-        #These should be labled with coments
         pr1 = 0.02 #RNA production rate of Euo
         pr2 = 0.02 #RNA production rate of HctA
         pr3 = 0.06 #RNA production rate of HctB
@@ -168,7 +167,7 @@ def update(cells):
             cell.color = [[1/cell.geneamt[1], 1, 1/cell.geneamt[1]]]
             #print('growthRate = ' + str(cell.growthRate))
             #print('percentchance = ' + str(cell.percentchance[0]))
-            print('RBe Trigger Value = ' + str(cell.percentchance[1]))
+            print('RBi Trigger Value = ' + str(cell.percentchance[1]))
             print('time2 = ' + str(time2))
             
             if time2.is_integer() and random.uniform(0,100) <= cell.percentchance[0]: # time2.is_integer() and  RBr to RBe. species[0] = magic Rbr>RBe signal
