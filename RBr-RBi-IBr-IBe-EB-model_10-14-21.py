@@ -124,6 +124,7 @@ def update(cells):
         #print('growthRate = ' + str(cell.growthRate))
         #print('percentchance = ' + str(cell.percentchance[0]))
         
+        # add if statement controlling rates based on time
         #pr = RNA production rate
         #nr = RNA degradation rate
         #These should be labled with coments
