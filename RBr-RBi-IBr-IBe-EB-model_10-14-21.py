@@ -128,22 +128,18 @@ def update(cells):
         #pr = RNA production rate
         #nr = RNA degradation rate
         #These should be labled with coments
-        pr0 = 0.02 #RNA production rate of ??
         pr1 = 0.02 #RNA production rate of Euo
         pr2 = 0.02 #RNA production rate of HctA
         pr3 = 0.06 #RNA production rate of HctB
-        nr0 = 0.02 #RNA degredation rate of ??
         nr1 = 0.02 #RNA degredation rate of Euo
         nr2 = 0.01 #RNA degredation rate of HctA
         nr3 = 0.024 #RNA degredation rate of HctB       
 
         #p = protein production rate
         #n = protein degradation rate
-        p0 = 0.5  #protein production rate of ??
         p1 = 0.5  #protein production rate of Euo
         p2 = 0.5  #protein production rate of HctA
         p3 = 0.5  #protein production rate of HctB
-        n0 = 0.08 #protein degredation rate of ??
         n1 = 0.08 #protein degredation rate of Euo
         n2 = 0.05 #protein degredation rate of HctA
         n3 = 0.01 #protein degredation rate of HctB   
