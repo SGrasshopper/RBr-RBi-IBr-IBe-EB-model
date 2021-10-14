@@ -105,9 +105,9 @@ def sigRateCL(): #Add
 time = 0
 def update(cells):
     global time
-    global n0
+    global n0 #whats this and why global?
     time += 1
-    time2 = (time/10)
+    time2 = (time/10) 
     print('time = ' + str(time))
     print('time2 = ' + str(time2)) 
 
@@ -126,26 +126,26 @@ def update(cells):
         
         #pr = RNA production rate
         #nr = RNA degradation rate
-        pr0 = 0.02
-        pr1 = 0.02
-        pr2 = 0.02
-        pr3 = 0.06
-        nr0 = 0.02
-        nr1 = 0.02
-        nr2 = 0.01
-        nr3 = 0.024        
+        #These should be labled with coments
+        pr0 = 0.02 #RNA production rate of ??
+        pr1 = 0.02 #RNA production rate of Euo
+        pr2 = 0.02 #RNA production rate of HctA
+        pr3 = 0.06 #RNA production rate of HctB
+        nr0 = 0.02 #RNA degredation rate of ??
+        nr1 = 0.02 #RNA degredation rate of Euo
+        nr2 = 0.01 #RNA degredation rate of HctA
+        nr3 = 0.024 #RNA degredation rate of HctB       
 
         #p = protein production rate
         #n = protein degradation rate
-        
-        p0 = 0.5
-        p1 = 0.5
-        p2 = 0.5
-        p3 = 0.5
-        n0 = 0.08
-        n1 = 0.08
-        n2 = 0.05
-        n3 = 0.01
+        p0 = 0.5  #protein production rate of ??
+        p1 = 0.5  #protein production rate of Euo
+        p2 = 0.5  #protein production rate of HctA
+        p3 = 0.5  #protein production rate of HctB
+        n0 = 0.08 #protein degredation rate of ??
+        n1 = 0.08 #protein degredation rate of Euo
+        n2 = 0.05 #protein degredation rate of HctA
+        n3 = 0.01 #protein degredation rate of HctB   
         
         if cell.volume > cell.targetVol:
             cell.divideFlag = True
@@ -160,18 +160,18 @@ def update(cells):
                 
         if cell.cellType == 1: #RBr
         	
-        	#Don't need RNA amounts.  Just protein will work.  I guess you are using RNA->protein to do your math?
+        	#I guess you are using RNA->protein to do your math?
         	#geneamt[0] is labeled "extra" but used cell color?  Don't understand. Lable extra in a meaningful way.
         	
             cell.rnaamt[0] = cell.rnaamt[0] + (pr0 * cell.growthRate) - (nr0 * cell.rnaamt[0] * cell.growthRate) #extra RNA
             cell.geneamt[0] = cell.geneamt[0] + (p0 * cell.growthRate * cell.rnaamt[0]) - (n0 * cell.growthRate * cell.geneamt[0]) #extra protein
             
             cell.rnaamt[1] = cell.rnaamt[1] + (pr1 * cell.growthRate) - (nr1 * cell.rnaamt[1] * cell.growthRate) #Euo RNA
-            cell.geneamt[1] = cell.geneamt[1] + (p1 * cell.growthRate * cell.rnaamt[1]) - (n1 * cell.growthRate * cell.geneamt[1]) #Euo
+            cell.geneamt[1] = cell.geneamt[1] + (p1 * cell.growthRate * cell.rnaamt[1]) - (n1 * cell.growthRate * cell.geneamt[1]) #Euo protein
            
-            cell.geneamt[2] = 0 # HctA
+            cell.geneamt[2] = 0 # HctA protein
            
-            cell.geneamt[3] = 0 # HctB
+            cell.geneamt[3] = 0 # HctB protein
             cell.color = [[1/cell.geneamt[0], 1, 1/cell.geneamt[0]]]
             #print('growthRate = ' + str(cell.growthRate))
             #print('percentchance = ' + str(cell.percentchance[0]))
@@ -183,15 +183,15 @@ def update(cells):
                 print('im an RBe')
                 cell.cellType = 2 #RBe conversion
                 cell.rnaamt[1] = cell.rnaamt[1] + (pr1 * cell.growthRate) - (nr1 * cell.rnaamt[1] * cell.growthRate) #Euo RNA
-                cell.geneamt[1] = cell.geneamt[1] + (p1 * cell.growthRate * cell.rnaamt[1]) - (n1 * cell.growthRate * cell.geneamt[1]) #Euo
+                cell.geneamt[1] = cell.geneamt[1] + (p1 * cell.growthRate * cell.rnaamt[1]) - (n1 * cell.growthRate * cell.geneamt[1]) #Euo protein
                 cell.color = [[1/cell.geneamt[1], 1, 1/cell.geneamt[1]]] # color magic, fix
         
         if  cell.cellType == 2: #RBe
             cell.rnaamt[1] = cell.rnaamt[1] + (pr1 * cell.growthRate) - (nr1 * cell.rnaamt[1] * cell.growthRate) #Euo RNA
-            cell.geneamt[1] = cell.geneamt[1] + (p1 * cell.growthRate * cell.rnaamt[1]) - (n1 * cell.growthRate * cell.geneamt[1]) #Euo 
+            cell.geneamt[1] = cell.geneamt[1] + (p1 * cell.growthRate * cell.rnaamt[1]) - (n1 * cell.growthRate * cell.geneamt[1]) #Euo protein 
             
         if  cell.cellType == 3: #IB   #need to add Euo inhibition of HctA. High Euo blocks HctA production. Inherit high Euo and have it degrade fast. Turn on HctA at low levels of Euo.
-            cell.geneamt[1] = cell.geneamt[1] - (n1 * cell.parentGrowth[0] * cell.geneamt[1]) # Euo
+            cell.geneamt[1] = cell.geneamt[1] - (n1 * cell.parentGrowth[0] * cell.geneamt[1]) # Euo protein
             
             cell.rnaamt[2] = cell.rnaamt[2] + (pr2 * cell.parentGrowth[0])  - (nr2 * cell.rnaamt[2]) #hctA RNA
             cell.geneamt[2] = cell.geneamt[2] + (p2 * cell.parentGrowth[0] * cell.rnaamt[2]) - (n2 * cell.parentGrowth[0] * cell.geneamt[2]) #hctA link this to Euo levels
@@ -201,21 +201,21 @@ def update(cells):
                 cell.cellType = 4 #pre_EB
        
         if cell.cellType == 4: #pre_EB
-            cell.geneamt[2] = cell.geneamt[2] - (n2 * cell.parentGrowth[0] * cell.geneamt[2]) #hctA deg
+            cell.geneamt[2] = cell.geneamt[2] - (n2 * cell.parentGrowth[0] * cell.geneamt[2]) #hctA protein deg
             
             cell.rnaamt[3] = cell.rnaamt[3] + (pr3 * cell.parentGrowth[0])  - (nr3 * cell.rnaamt[3]) #hctB RNA
-            cell.geneamt[3] = cell.geneamt[3] + (p3 * cell.parentGrowth[0] * cell.rnaamt[3])  - (n3 * cell.parentGrowth[0] * cell.geneamt[3]) #hctB
+            cell.geneamt[3] = cell.geneamt[3] + (p3 * cell.parentGrowth[0] * cell.rnaamt[3])  - (n3 * cell.parentGrowth[0] * cell.geneamt[3]) #hctB protein
             
             cell.growthRate = 0 # does cell type 3 grow? probably not. Move this up to cell type 3
             cell.color = [[0, 0, cell.geneamt[3]/100]] #need to fix color
-            if cell.geneamt[3] >= 15: #hctB
+            if cell.geneamt[3] >= 15: #hctB protein
                 cell.cellType = 5 #infectious EB
                     
         if cell.cellType == 5: #infectious EB
             cell.geneamt[2] = cell.geneamt[2] - (n2 * cell.parentGrowth[0] * cell.geneamt[2]) #hctA deg. does this continue the degradation? change rates? why is this here again?
             
             cell.rnaamt[3] = cell.rnaamt[3] + (pr3 * cell.parentGrowth[0])  - (nr3 * cell.rnaamt[3]) #hctB RNA
-            cell.geneamt[3] = cell.geneamt[3] + (p3 * cell.parentGrowth[0] * cell.rnaamt[3])  - (n3 * cell.parentGrowth[0] * cell.geneamt[3]) #hctB
+            cell.geneamt[3] = cell.geneamt[3] + (p3 * cell.parentGrowth[0] * cell.rnaamt[3])  - (n3 * cell.parentGrowth[0] * cell.geneamt[3]) #hctB protein
             
             cell.color = [2.0, 0.0, 0.5]
             
