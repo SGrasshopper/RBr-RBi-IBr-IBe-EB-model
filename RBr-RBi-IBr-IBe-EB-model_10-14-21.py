@@ -173,7 +173,7 @@ def update(cells):
             if time2.is_integer() and random.uniform(0,100) <= cell.percentchance[0]: # time2.is_integer() and  RBr to RBe. species[0] = magic Rbr>RBe signal
                 #print('time2 is int' + str(time2))
                 print('im an RBi')
-                cell.cellType = 2 #RBe conversion
+                cell.cellType = 2 #RBi conversion
                 cell.rnaamt[1] = cell.rnaamt[1] + (pr1 * cell.growthRate) - (nr1 * cell.rnaamt[1] * cell.growthRate) #Euo RNA
                 cell.geneamt[1] = cell.geneamt[1] + (p1 * cell.growthRate * cell.rnaamt[1]) - (n1 * cell.growthRate * cell.geneamt[1]) #Euo protein
                 cell.color = [[1/cell.geneamt[1], 1, 1/cell.geneamt[1]]] # color magic, fix
