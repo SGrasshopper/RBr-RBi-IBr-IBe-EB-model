@@ -180,17 +180,17 @@ def update(cells):
             
             if time2.is_integer() and random.uniform(0,100) <= cell.percentchance[0]: # time2.is_integer() and  RBr to RBe. species[0] = magic Rbr>RBe signal
                 #print('time2 is int' + str(time2))
-                print('im an RBe')
+                print('im an RBi')
                 cell.cellType = 2 #RBe conversion
                 cell.rnaamt[1] = cell.rnaamt[1] + (pr1 * cell.growthRate) - (nr1 * cell.rnaamt[1] * cell.growthRate) #Euo RNA
                 cell.geneamt[1] = cell.geneamt[1] + (p1 * cell.growthRate * cell.rnaamt[1]) - (n1 * cell.growthRate * cell.geneamt[1]) #Euo protein
                 cell.color = [[1/cell.geneamt[1], 1, 1/cell.geneamt[1]]] # color magic, fix
         
-        if  cell.cellType == 2: #RBe
+        if  cell.cellType == 2: #RBi
             cell.rnaamt[1] = cell.rnaamt[1] + (pr1 * cell.growthRate) - (nr1 * cell.rnaamt[1] * cell.growthRate) #Euo RNA
             cell.geneamt[1] = cell.geneamt[1] + (p1 * cell.growthRate * cell.rnaamt[1]) - (n1 * cell.growthRate * cell.geneamt[1]) #Euo protein 
             
-        if  cell.cellType == 3: #IB   #need to add Euo inhibition of HctA. High Euo blocks HctA production. Inherit high Euo and have it degrade fast. Turn on HctA at low levels of Euo.
+        if  cell.cellType == 3: #IBr   #need to add Euo inhibition of HctA. High Euo blocks HctA production. Inherit high Euo and have it degrade fast. Turn on HctA at low levels of Euo.
             cell.geneamt[1] = cell.geneamt[1] - (n1 * cell.parentGrowth[0] * cell.geneamt[1]) # Euo protein
             
             cell.rnaamt[2] = cell.rnaamt[2] + (pr2 * cell.parentGrowth[0])  - (nr2 * cell.rnaamt[2]) #hctA RNA
@@ -198,9 +198,9 @@ def update(cells):
     
             cell.color = [[0, 0, cell.geneamt[2]/100]] #need to fix color
             if cell.geneamt[2] >= 4: 
-                cell.cellType = 4 #pre_EB
+                cell.cellType = 4 #IBe
        
-        if cell.cellType == 4: #pre_EB
+        if cell.cellType == 4: #IBe
             cell.geneamt[2] = cell.geneamt[2] - (n2 * cell.parentGrowth[0] * cell.geneamt[2]) #hctA protein deg
             
             cell.rnaamt[3] = cell.rnaamt[3] + (pr3 * cell.parentGrowth[0])  - (nr3 * cell.rnaamt[3]) #hctB RNA
@@ -209,9 +209,9 @@ def update(cells):
             cell.growthRate = 0 # does cell type 3 grow? probably not. Move this up to cell type 3
             cell.color = [[0, 0, cell.geneamt[3]/100]] #need to fix color
             if cell.geneamt[3] >= 15: #hctB protein
-                cell.cellType = 5 #infectious EB
+                cell.cellType = 5 #EB
                     
-        if cell.cellType == 5: #infectious EB
+        if cell.cellType == 5: #EB
             cell.geneamt[2] = cell.geneamt[2] - (n2 * cell.parentGrowth[0] * cell.geneamt[2]) #hctA deg. does this continue the degradation? change rates? why is this here again?
             
             cell.rnaamt[3] = cell.rnaamt[3] + (pr3 * cell.parentGrowth[0])  - (nr3 * cell.rnaamt[3]) #hctB RNA
@@ -237,7 +237,7 @@ def divide(parent, d1, d2):
         d1.geneamt[1] = parent.geneamt[1]/2
         d2.geneamt[1] = parent.geneamt[1]/2 
 
-    if parent.cellType == 2: # If RBe: make 1RBe, 1IB
+    if parent.cellType == 2: # If RBi: make 1RBi, 1IBe
         d1.cellType = 2
         d1.targetVol = 2 #* numpy.random.normal(1, 0.05)
         d1.growthRate = parent.parentGrowth[0] * numpy.random.normal(1, 0.05)
