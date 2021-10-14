@@ -250,10 +250,6 @@ def divide(parent, d1, d2):
 
 #this model: GermEB lavendar, Rbr green, Rbe green, IB black, EB  hot pink
 
-# Rbr matures into Rbe based on percentchance curve from empirical data
+# RBr matures into RBi based on percentchance curve from empirical data
 
-# Rbe divides > Rbe and IB
-
-# IB starts with hctA == 0, matures to EB(celltype == 5), based on HctB accumulation                 
-   
-# ISSUES WITH CURRENT MODEL
+# RBi divides -> RBI and IBr
