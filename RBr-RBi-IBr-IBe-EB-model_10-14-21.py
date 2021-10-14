@@ -73,13 +73,13 @@ def init(cell):
     
     #RNA and protein 
     cell.rnaamt = [0,0,0,0] # RNA levels, used, in part, to drive geneamt levels
-    cell.geneamt = [0.0, 0.0, 0.0, 0.0]   #[0]= magic Rbr>RBe signal, [1]=Euo, [2]=HctA, [3]=HctB
+    cell.geneamt = [0.0, 0.0, 0.0, 0.0]   #[0]= ?, [1]=Euo, [2]=HctA, [3]=HctB
     
     #EB to RB germination time
     cell.germTime = [(120 + random.uniform(-40,40))] #based on livecell and single cell expansion data: need to measure actually germ time variation and fit to dist
 
-    #RBr > RBe conversion percent
-    cell.percentchance = [0,0] #curve that drives RBr > RBe conversion
+    #RBr > RBi conversion percent
+    cell.percentchance = [0,0] #curve that drives RBr > RBi conversion
 
     #Specify initial concentration of chemical 
     cell.species[:] = [0.0] #species is concentration, I checked TC, cell growth causes steady state, cell division increases concentration
@@ -113,14 +113,14 @@ def update(cells):
 
     #Iterate through each cell and flag cells that reach target size for division
     
-    # Celltypes: 0=germ_EB, 1=RBr, 2=RBe, 3=IB, 4=pre_EB, 5=EB
+    # Celltypes: 0=germ_EB, 1=RBr, 2=RBi, 3=IBr, 4=IBe, 5=EB
 
     for (id, cell) in cells.items():
     
         if time >= cell.germTime[0]:
             #cell.percentchance[0] = (105/(1 + numpy.exp((1.76663094e+01-time2)*3.77251916e-01)) - 5) #on singlecell LVA counts
             cell.percentchance[0] = (97.81/(1 + numpy.exp((2.15841312e+01-((time2*cell.growthRate)))*6.77630536e-01)) + 2.19) #on livecell data and early RBe counts, percent chance of RB conversion
-            #cell.percentchance[0] = (96.45042921/(1 + numpy.exp((13.60222209-time2)*1.4553212)) + 1.68390956)#early RBe counts
+            #cell.percentchance[0] = (96.45042921/(1 + numpy.exp((13.60222209-time2)*1.4553212)) + 1.68390956)#early RBi counts
         #print('growthRate = ' + str(cell.growthRate))
         #print('percentchance = ' + str(cell.percentchance[0]))
         
