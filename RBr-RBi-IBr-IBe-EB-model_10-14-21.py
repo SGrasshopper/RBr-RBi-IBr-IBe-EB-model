@@ -260,4 +260,6 @@ def divide(parent, d1, d2):
 
 # RBr matures into RBi based on percentchance curve from empirical data
 
-# RBi divides -> RBI and IBr
+# RBi divides -> RBi and IBr
+# RBi -> IBe is controled by the degredation of Euo inducing HctA and CtcB. HctA represses Euo while CtcB induces HctB and the sigma 54 regulon
+# IBe -> EB is controled the induction of HctB and the sigma 54 regulon
