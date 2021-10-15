@@ -143,6 +143,8 @@ def update(cells):
         n2 = 0.05 #protein degredation rate of HctA
         n3 = 0.01 #protein degredation rate of HctB   
         
+        # For inducion and repression of Ectopicly expressed proteins 
+        # Add the expression behaviour to each cell type.
         while time < 100000
             pr0 = 0 #RNA production rate of ectExp
             nr0 = 0 #RNA degredation rate of ectExp
