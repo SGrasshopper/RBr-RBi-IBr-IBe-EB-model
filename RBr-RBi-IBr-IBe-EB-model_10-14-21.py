@@ -73,7 +73,7 @@ def init(cell):
     
     #RNA and protein 
     cell.rnaamt = [0,0,0,0] # RNA levels, used, in part, to drive geneamt levels
-    cell.geneamt = [0.0, 0.0, 0.0, 0.0]   #[0]= ?, [1]=Euo, [2]=HctA, [3]=HctB
+    cell.geneamt = [0.0, 0.0, 0.0, 0.0]   #[0]= ectExp, [1]=Euo, [2]=HctA, [3]=HctB
     
     #EB to RB germination time
     cell.germTime = [(120 + random.uniform(-40,40))] #based on livecell and single cell expansion data: need to measure actually germ time variation and fit to dist
@@ -142,6 +142,12 @@ def update(cells):
         n1 = 0.08 #protein degredation rate of Euo
         n2 = 0.05 #protein degredation rate of HctA
         n3 = 0.01 #protein degredation rate of HctB   
+        
+        while time < 100000
+            pr0 = 0 #RNA production rate of ectExp
+            nr0 = 0 #RNA degredation rate of ectExp
+            p0 = 0  #Protein production rate of ectExp
+            n0 = 0  #Protein degredation rate of ectExp
         
         if cell.volume > cell.targetVol:
             cell.divideFlag = True
