@@ -72,8 +72,8 @@ def init(cell):
     #cell.color = [0.0,0.0,1.0] #blue
     
     #RNA and protein 
-    cell.rnaamt = [0,0,0,0] # RNA levels, used, in part, to drive geneamt levels
-    cell.geneamt = [0.0, 0.0, 0.0, 0.0]   #[0]= ectExp, [1]=Euo, [2]=HctA, [3]=HctB
+    cell.rnaamt = [0.0,0.0,0.0,0.0] # RNA levels, used, in part, to drive geneamt levels
+    cell.geneamt = [0.0,0.0,0.0,0.0]   #[0]= ectExp, [1]=Euo, [2]=HctA, [3]=HctB
     
     #EB to RB germination time
     cell.germTime = [(120 + random.uniform(-40,40))] #based on livecell and single cell expansion data: need to measure actually germ time variation and fit to dist
