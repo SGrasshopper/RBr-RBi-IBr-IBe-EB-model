@@ -145,7 +145,7 @@ def update(cells):
         
         # For inducion and repression of Ectopicly expressed proteins 
         # Add the expression behaviour to each cell type.
-        while time < 100000
+        while time > 100000
             pr0 = 0 #RNA production rate of ectExp
             nr0 = 0 #RNA degredation rate of ectExp
             p0 = 0  #Protein production rate of ectExp
