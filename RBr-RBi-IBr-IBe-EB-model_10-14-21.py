@@ -13,7 +13,7 @@ from CellModeller.Signalling.GridDiffusion import GridDiffusion
 #for openGL:  conda install -c conda-forge pyopencl
 #pip install pyopencl
 
-max_cells = 800
+max_cells = 1500
 
 #Specify parameter for solving diffusion dynamics #Add
 grid_size = (4, 4, 4) # grid size
