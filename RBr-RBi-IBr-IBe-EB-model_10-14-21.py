@@ -151,10 +151,6 @@ def update(cells):
             
             cell.rnaamt[1] = cell.rnaamt[1] + (pr1 * cell.growthRate) - (nr1 * cell.rnaamt[1]) #Euo RNA
             cell.geneamt[1] = cell.geneamt[1] + (p1 * cell.rnaamt[1] * cell.growthRate) - (n1 * cell.geneamt[1]) #Euo protein
-           
-            cell.geneamt[2] = 0 # HctA protein
-            cell.geneamt[3] = 0 # CtcB protein
-            cell.geneamt[4] = 0 # HctB protein
             
             cell.color = [[1/cell.geneamt[1], 1, 1/cell.geneamt[1]]]
             #print('growthRate = ' + str(cell.growthRate))
