@@ -168,7 +168,6 @@ def update(cells):
             if time >= cell.germTime[0]: #Become RBr if time is reached
                 cell.cellType = 1 #RBr
                 cell.growthRate = 1.0 + random.uniform(-0.05,0.05)
-                #cell.parentGrowth[0] = cell.growthRate # do we need this here we realy only need to capture parentGrowth rate at birth?
                 
         if cell.cellType == 1: #RBr
         	
@@ -193,13 +192,7 @@ def update(cells):
                 #print('time2 is int' + str(time2))
                 print('im an RBi')
                 cell.cellType = 2 #RBi conversion
-                ###### why is this here? is it needed again?  
-                #cell.rnaamt[1] = cell.rnaamt[1] + (pr1 * cell.growthRate) - (nr1 * cell.rnaamt[1] * cell.growthRate) #Euo RNA
-                #cell.geneamt[1] = cell.geneamt[1] + (p1 * cell.growthRate * cell.rnaamt[1]) - (n1 * cell.growthRate * cell.geneamt[1]) #Euo protein
-                #######
                 cell.color = [[1/cell.geneamt[1], 1, 1/cell.geneamt[1]]] # color magic, fix
-                
-        #### MISSING A CELLTYPE. ???? what cell type is missing???? 0 = nascent RB, 1 = RBr, 2 = RBi, 3 = IBr, 4 = IBe, 5 = EB
         
         if  cell.cellType == 2: #RBi
             cell.rnaamt[0] = cell.rnaamt[0] + (pr0 * cell.growthRate) - (nr0 * cell.rnaamt[0] * cell.growthRate) # RNA of ectopic expressed protein
@@ -254,12 +247,10 @@ def divide(parent, d1, d2):
     if parent.cellType == 1: # If RBr: make 2RBrs
         d1.cellType = 1
         d1.targetVol = 2 #* numpy.random.normal(1, 0.05)
-        #d1.growthRate = parent.parentGrowth[0] * numpy.random.normal(1, 0.05) #what is going on here?  why not use parent.growthRate?
         d1.growthRate = parent.growthRate * numpy.random.normal(1, 0.05)
         
         d2.cellType = 1
         d2.targetVol = 2 #* numpy.random.normal(1, 0.05)
-        #d2.growthRate = parent.parentGrowth[0] * numpy.random.normal(1, 0.05) #what is going on here?  why not use parent.growthRate?
         d2.growthRate = parent.growthRate * numpy.random.normal(1, 0.05)
         
         d1.geneamt[0] = parent.geneamt[0]/2
@@ -270,7 +261,6 @@ def divide(parent, d1, d2):
     if parent.cellType == 2: # If RBi: make 1RBi, 1IBe
         d1.cellType = 2
         d1.targetVol = 2 #* numpy.random.normal(1, 0.05)
-        #d1.growthRate = parent.parentGrowth[0] * numpy.random.normal(1, 0.05) #what is going on here?  why not use parent.growthRate?
         d1.growthRate = parent.growthRate * numpy.random.normal(1, 0.05)
         
         d2.cellType = 3
