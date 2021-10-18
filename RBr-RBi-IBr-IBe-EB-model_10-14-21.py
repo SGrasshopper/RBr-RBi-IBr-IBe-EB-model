@@ -198,7 +198,9 @@ def update(cells):
                 #cell.geneamt[1] = cell.geneamt[1] + (p1 * cell.growthRate * cell.rnaamt[1]) - (n1 * cell.growthRate * cell.geneamt[1]) #Euo protein
                 #######
                 cell.color = [[1/cell.geneamt[1], 1, 1/cell.geneamt[1]]] # color magic, fix
-        #### MISSING A CELLTYPE
+                
+        #### MISSING A CELLTYPE. ???? what cell type is missing???? 0 = nascent RB, 1 = RBr, 2 = RBi, 3 = IBr, 4 = IBe, 5 = EB
+        
         if  cell.cellType == 2: #RBi
             cell.rnaamt[0] = cell.rnaamt[0] + (pr0 * cell.growthRate) - (nr0 * cell.rnaamt[0] * cell.growthRate) # RNA of ectopic expressed protein
             cell.geneamt[0] = cell.geneamt[0] + (p0 * cell.rnaamt[0] * cell.growthRate) - (n0 * cell.geneamt[0] * cell.growthRate) #Ectopic expresed protein
