@@ -201,12 +201,14 @@ def update(cells):
             cell.rnaamt[1] = cell.rnaamt[1] + (pr1 * cell.growthRate) - (nr1 * cell.rnaamt[1] * cell.growthRate) #Euo RNA
             cell.geneamt[1] = cell.geneamt[1] + (p1 * cell.rnaamt[1] * cell.growthRate) - (n1 * cell.geneamt[1] * cell.growthRate) #Euo protein 
             
-        if  cell.cellType == 3: #IBr   #need to add Euo inhibition of HctA. High Euo blocks HctA production. Inherit high Euo and have it degrade fast. Turn on HctA at low levels of Euo.
-            cell.rnaamt[0] = cell.rnaamt[0] + (pr0 * cell.parentGrowth[0]) - (nr0 * cell.rnaamt[0] * cell.parentGrowth[0]) # RNA of ectopic expressed protein
-            cell.geneamt[0] = cell.geneamt[0] + (p0 * cell.rnaamt[0] * cell.parentGrowth[0]) - (n0 * cell.geneamt[0] * cell.parentGrowth[0]) #Ectopic expresed protein
-           
+        if  cell.cellType == 3:
             pr1 = 0.0
             p1 = 0.0
+            
+            #IBr   #need to add Euo inhibition of HctA. High Euo blocks HctA production. Inherit high Euo and have it degrade fast. Turn on HctA at low levels of Euo.
+            cell.rnaamt[0] = cell.rnaamt[0] + (pr0 * cell.parentGrowth[0]) - (nr0 * cell.rnaamt[0] * cell.parentGrowth[0]) # RNA of ectopic expressed protein
+            cell.geneamt[0] = cell.geneamt[0] + (p0 * cell.rnaamt[0] * cell.parentGrowth[0]) - (n0 * cell.geneamt[0] * cell.parentGrowth[0]) #Ectopic expresed protein
+
             cell.rnaamt[1] = cell.rnaamt[1] + (pr1 * cell.parentGrowth[0]) - (nr1 * cell.rnaamt[1] * cell.parentGrowth[0]) #Euo RNA
             cell.geneamt[1] = cell.geneamt[1] + (p1 * cell.rnaamt[1] * cell.parentGrowth[0]) - (n1 * cell.geneamt[1] * cell.parentGrowth[0]) #Euo protein 
             
