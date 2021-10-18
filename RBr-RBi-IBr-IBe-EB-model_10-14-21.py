@@ -198,13 +198,13 @@ def update(cells):
             cell.geneamt[1] = cell.geneamt[1] + (p1 * cell.growthRate * cell.rnaamt[1]) - (n1 * cell.growthRate * cell.geneamt[1]) #Euo protein 
             
         if  cell.cellType == 3: #IBr   #need to add Euo inhibition of HctA. High Euo blocks HctA production. Inherit high Euo and have it degrade fast. Turn on HctA at low levels of Euo.
-            cell.rnaamt[0] = cell.rnaamt[0] + (pr0 * cell.growthRate) - (nr0 * cell.rnaamt[0] * cell.growthRate) # RNA of ectopic expressed protein
-            cell.geneamt[0] = cell.geneamt[0] + (p0 * cell.growthRate * cell.rnaamt[0]) - (n0 * cell.growthRate * cell.geneamt[0]) #Ectopic expresed protein
+            cell.rnaamt[0] = cell.rnaamt[0] + (pr0 * cell.parentGrowth[0]) - (nr0 * cell.rnaamt[0] * cell.parentGrowth[0]) # RNA of ectopic expressed protein
+            cell.geneamt[0] = cell.geneamt[0] + (p0 * cell.parentGrowth[0] * cell.rnaamt[0]) - (n0 * cell.parentGrowth[0] * cell.geneamt[0]) #Ectopic expresed protein
             
-            cell.rnaamt[1] = cell.rnaamt[1] + (pr1 * cell.growthRate) - (nr1 * cell.rnaamt[1] * cell.growthRate) #Euo RNA
-            cell.geneamt[1] = cell.geneamt[1] + (p1 * cell.growthRate * cell.rnaamt[1]) - (n1 * cell.growthRate * cell.geneamt[1]) #Euo protein 
+            cell.rnaamt[1] = cell.rnaamt[1] + (pr1 * cell.parentGrowth[0]) - (nr1 * cell.rnaamt[1] * cell.parentGrowth[0]) #Euo RNA
+            cell.geneamt[1] = cell.geneamt[1] + (p1 * cell.parentGrowth[0] * cell.rnaamt[1]) - (n1 * cell.parentGrowth[0] * cell.geneamt[1]) #Euo protein 
             
-            cell.rnaamt[2] = cell.rnaamt[2] + (pr2 * cell.parentGrowth[0])  - (nr2 * cell.rnaamt[2]) #hctA RNA
+            cell.rnaamt[2] = cell.rnaamt[2] + (pr2 * cell.parentGrowth[0]) - (nr2 * cell.rnaamt[2] * cell.parentGrowth[0]) #hctA RNA
             cell.geneamt[2] = cell.geneamt[2] + (p2 * cell.parentGrowth[0] * cell.rnaamt[2]) - (n2 * cell.parentGrowth[0] * cell.geneamt[2]) #hctA link this to Euo levels
     
             cell.color = [[0, 0, cell.geneamt[2]/100]] #need to fix color
@@ -214,10 +214,10 @@ def update(cells):
         if cell.cellType == 4: #IBe
             cell.geneamt[2] = cell.geneamt[2] - (n2 * cell.parentGrowth[0] * cell.geneamt[2]) #hctA protein deg
             
-            cell.rnaamt[3] = cell.rnaamt[3] + (pr3 * cell.parentGrowth[0])  - (nr3 * cell.rnaamt[3]) #hctB RNA
+            cell.rnaamt[3] = cell.rnaamt[3] + (pr3 * cell.parentGrowth[0])  - (nr3 * cell.rnaamt[3] * cell.parentGrowth[0]) #hctB RNA
             cell.geneamt[3] = cell.geneamt[3] + (p3 * cell.parentGrowth[0] * cell.rnaamt[3])  - (n3 * cell.parentGrowth[0] * cell.geneamt[3]) #hctB protein
             
-            cell.growthRate = 0 # does cell type 3 grow? probably not. Move this up to cell type 3, see if needed
+            #cell.growthRate = 0 # does cell type 3 grow? probably not. Move this up to cell type 3, see if needed
             cell.color = [[0, 0, cell.geneamt[3]/100]] #need to fix color
             if cell.geneamt[3] >= 15: #hctB protein
                 cell.cellType = 5 #EB
@@ -225,7 +225,7 @@ def update(cells):
         if cell.cellType == 5: #EB
             cell.geneamt[2] = cell.geneamt[2] - (n2 * cell.parentGrowth[0] * cell.geneamt[2]) #hctA deg. does this continue the degradation? change rates? why is this here again? see if needed
             
-            cell.rnaamt[3] = cell.rnaamt[3] + (pr3 * cell.parentGrowth[0])  - (nr3 * cell.rnaamt[3]) #hctB RNA
+            cell.rnaamt[3] = cell.rnaamt[3] + (pr3 * cell.parentGrowth[0]) - (nr3 * cell.rnaamt[3] * cell.geneamt[3]) #hctB RNA
             cell.geneamt[3] = cell.geneamt[3] + (p3 * cell.parentGrowth[0] * cell.rnaamt[3])  - (n3 * cell.parentGrowth[0] * cell.geneamt[3]) #hctB protein
             
             cell.color = [2.0, 0.0, 0.5]
