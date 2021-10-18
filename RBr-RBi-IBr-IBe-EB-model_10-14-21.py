@@ -165,6 +165,8 @@ def update(cells):
         if cell.cellType == 1: #RBr
         	
         	#I guess you are using RNA->protein to do your math?
+            cell.rnaamt[0] = cell.rnaamt[0] + (pr0 * cell.growthRate) - (nr0 * cell.rnaamt[0] * cell.growthRate) # RNA of ectopic expressed protein
+            cell.geneamt[0] = cell.geneamt[0] + (p0 * cell.growthRate * cell.rnaamt[0]) - (n0 * cell.growthRate * cell.geneamt[0]) #Ectopic expresed protein
             
             cell.rnaamt[1] = cell.rnaamt[1] + (pr1 * cell.growthRate) - (nr1 * cell.rnaamt[1] * cell.growthRate) #Euo RNA
             cell.geneamt[1] = cell.geneamt[1] + (p1 * cell.growthRate * cell.rnaamt[1]) - (n1 * cell.growthRate * cell.geneamt[1]) #Euo protein
@@ -182,16 +184,25 @@ def update(cells):
                 #print('time2 is int' + str(time2))
                 print('im an RBi')
                 cell.cellType = 2 #RBi conversion
+                ###### why is this here? is it needed again?  
                 cell.rnaamt[1] = cell.rnaamt[1] + (pr1 * cell.growthRate) - (nr1 * cell.rnaamt[1] * cell.growthRate) #Euo RNA
                 cell.geneamt[1] = cell.geneamt[1] + (p1 * cell.growthRate * cell.rnaamt[1]) - (n1 * cell.growthRate * cell.geneamt[1]) #Euo protein
+                #######
                 cell.color = [[1/cell.geneamt[1], 1, 1/cell.geneamt[1]]] # color magic, fix
         
         if  cell.cellType == 2: #RBi
+            cell.rnaamt[0] = cell.rnaamt[0] + (pr0 * cell.growthRate) - (nr0 * cell.rnaamt[0] * cell.growthRate) # RNA of ectopic expressed protein
+            cell.geneamt[0] = cell.geneamt[0] + (p0 * cell.growthRate * cell.rnaamt[0]) - (n0 * cell.growthRate * cell.geneamt[0]) #Ectopic expresed protein
+            
             cell.rnaamt[1] = cell.rnaamt[1] + (pr1 * cell.growthRate) - (nr1 * cell.rnaamt[1] * cell.growthRate) #Euo RNA
             cell.geneamt[1] = cell.geneamt[1] + (p1 * cell.growthRate * cell.rnaamt[1]) - (n1 * cell.growthRate * cell.geneamt[1]) #Euo protein 
             
         if  cell.cellType == 3: #IBr   #need to add Euo inhibition of HctA. High Euo blocks HctA production. Inherit high Euo and have it degrade fast. Turn on HctA at low levels of Euo.
-            cell.geneamt[1] = cell.geneamt[1] - (n1 * cell.parentGrowth[0] * cell.geneamt[1]) # Euo protein
+            cell.rnaamt[0] = cell.rnaamt[0] + (pr0 * cell.growthRate) - (nr0 * cell.rnaamt[0] * cell.growthRate) # RNA of ectopic expressed protein
+            cell.geneamt[0] = cell.geneamt[0] + (p0 * cell.growthRate * cell.rnaamt[0]) - (n0 * cell.growthRate * cell.geneamt[0]) #Ectopic expresed protein
+            
+            cell.rnaamt[1] = cell.rnaamt[1] + (pr1 * cell.growthRate) - (nr1 * cell.rnaamt[1] * cell.growthRate) #Euo RNA
+            cell.geneamt[1] = cell.geneamt[1] + (p1 * cell.growthRate * cell.rnaamt[1]) - (n1 * cell.growthRate * cell.geneamt[1]) #Euo protein 
             
             cell.rnaamt[2] = cell.rnaamt[2] + (pr2 * cell.parentGrowth[0])  - (nr2 * cell.rnaamt[2]) #hctA RNA
             cell.geneamt[2] = cell.geneamt[2] + (p2 * cell.parentGrowth[0] * cell.rnaamt[2]) - (n2 * cell.parentGrowth[0] * cell.geneamt[2]) #hctA link this to Euo levels
