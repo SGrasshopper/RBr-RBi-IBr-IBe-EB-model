@@ -103,15 +103,13 @@ def sigRateCL(): #Add
     ''' 
     
 time = 0
-def update(cells):
+def update(cells): #Iterate through each cell update and flag cells that reach target size for division
     global time
     #global n0 #whats this and why global?
     time += 1
     time2 = (time/10) 
     print('time = ' + str(time))
     print('time2 = ' + str(time2)) 
-
-    #Iterate through each cell and flag cells that reach target size for division
     
     # Celltypes: 0=germ_EB, 1=RBr, 2=RBi, 3=IBr, 4=IBe, 5=EB
 
@@ -247,7 +245,6 @@ def update(cells):
             cell.rnaamt[4] = cell.rnaamt[4] + (pr4 * cell.parentGrowth[0]) - (nr4 * cell.rnaamt[4]) #hctB RNA
             cell.geneamt[4] = cell.geneamt[4] + (p4 * cell.rnaamt[4] * cell.parentGrowth[0]) - (n4 * cell.geneamt[4]) #HctB protein
             
-            #cell.growthRate = 0 # does cell type 3 grow? probably not. Move this up to cell type 3, see if needed
             cell.color = [[0, 0, cell.geneamt[4]/100]] #need to fix color
             if cell.geneamt[4] >= 15: #hctB protein
                 cell.cellType = 5 #EB
@@ -265,7 +262,7 @@ def update(cells):
             
 def divide(parent, d1, d2):
     # Specify target cell size that triggers cell division
-    # Celltype1=RBr, Celltype2=RBe, Celltype3=IB, Celltype4=immature EB, Celltype5=mature EB
+    # Celltype1=RBr, Celltype2=RBi, Celltype3=IBr, Celltype4=IBe, Celltype5=mature EB
     
     if parent.cellType == 1: # If RBr: make 2RBrs
         d1.cellType = 1
@@ -296,7 +293,6 @@ def divide(parent, d1, d2):
         d1.geneamt[1] = parent.geneamt[1]/2
         d2.geneamt[1] = parent.geneamt[1]/2 
         
-    #print('p1 = ' + str(parent.geneamt[0]))
     #print('d1.percentchance[1] =' + str(d1.percentchance[1]))
     #print('d2.percentchance[1] =' + str(d2.percentchance[1]))         
 
