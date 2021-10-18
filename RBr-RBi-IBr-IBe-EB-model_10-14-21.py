@@ -127,18 +127,22 @@ def update(cells):
         # add if statement controlling rates based on time
         #pr = RNA production rate
         #nr = RNA degradation rate
+        pr0 = 0.0 #RNA production rate of ectExp
         pr1 = 0.02 #RNA production rate of Euo
         pr2 = 0.02 #RNA production rate of HctA
         pr3 = 0.06 #RNA production rate of HctB
+        nr0 = 0.0 #RNA degredation rate of ectExp
         nr1 = 0.02 #RNA degredation rate of Euo
         nr2 = 0.01 #RNA degredation rate of HctA
         nr3 = 0.024 #RNA degredation rate of HctB       
 
         #p = protein production rate
         #n = protein degradation rate
+        p0 = 0.0  #Protein production rate of ectExp
         p1 = 0.5  #protein production rate of Euo
         p2 = 0.5  #protein production rate of HctA
         p3 = 0.5  #protein production rate of HctB
+        n0 = 0.0  #Protein degredation rate of ectExp
         n1 = 0.08 #protein degredation rate of Euo
         n2 = 0.05 #protein degredation rate of HctA
         n3 = 0.01 #protein degredation rate of HctB   
@@ -146,10 +150,10 @@ def update(cells):
         # For inducion and repression of Ectopicly expressed proteins 
         # Add the expression behaviour to each cell type.
         while time > 100000:
-            pr0 = 0 #RNA production rate of ectExp
-            nr0 = 0 #RNA degredation rate of ectExp
-            p0 = 0  #Protein production rate of ectExp
-            n0 = 0  #Protein degredation rate of ectExp
+            pr0 = 0.0 #RNA production rate of ectExp
+            nr0 = 0.0 #RNA degredation rate of ectExp
+            p0 = 0.0  #Protein production rate of ectExp
+            n0 = 0.0  #Protein degredation rate of ectExp
         
         if cell.volume > cell.targetVol:
             cell.divideFlag = True
@@ -160,7 +164,7 @@ def update(cells):
             if time >= cell.germTime[0]: #Become RBr if time is reached
                 cell.cellType = 1 #RBr
                 cell.growthRate = 1.0 + random.uniform(-0.05,0.05)
-                cell.parentGrowth[0] = cell.growthRate # do we need this here we realy only need to capture parentGrowth rate at birth?
+                #cell.parentGrowth[0] = cell.growthRate # do we need this here we realy only need to capture parentGrowth rate at birth?
                 
         if cell.cellType == 1: #RBr
         	
@@ -237,11 +241,13 @@ def divide(parent, d1, d2):
     if parent.cellType == 1: # If RBr: make 2RBrs
         d1.cellType = 1
         d1.targetVol = 2 #* numpy.random.normal(1, 0.05)
-        d1.growthRate = parent.parentGrowth[0] * numpy.random.normal(1, 0.05) #what is going on here?  why not use parent.growthRate?
-       
+        #d1.growthRate = parent.parentGrowth[0] * numpy.random.normal(1, 0.05) #what is going on here?  why not use parent.growthRate?
+        d1.growthRate = parent.growthRate * numpy.random.normal(1, 0.05)
+        
         d2.cellType = 1
         d2.targetVol = 2 #* numpy.random.normal(1, 0.05)
-        d2.growthRate = parent.parentGrowth[0] * numpy.random.normal(1, 0.05) #what is going on here?  why not use parent.growthRate?
+        #d2.growthRate = parent.parentGrowth[0] * numpy.random.normal(1, 0.05) #what is going on here?  why not use parent.growthRate?
+        d2.growthRate = parent.growthRate * numpy.random.normal(1, 0.05)
         
         d1.geneamt[0] = parent.geneamt[0]/2
         d2.geneamt[0] = parent.geneamt[0]/2
@@ -251,7 +257,8 @@ def divide(parent, d1, d2):
     if parent.cellType == 2: # If RBi: make 1RBi, 1IBe
         d1.cellType = 2
         d1.targetVol = 2 #* numpy.random.normal(1, 0.05)
-        d1.growthRate = parent.parentGrowth[0] * numpy.random.normal(1, 0.05) #what is going on here?  why not use parent.growthRate?
+        #d1.growthRate = parent.parentGrowth[0] * numpy.random.normal(1, 0.05) #what is going on here?  why not use parent.growthRate?
+        d1.growthRate = parent.growthRate * numpy.random.normal(1, 0.05)
         
         d2.cellType = 3
         d2.growthRate = 0
