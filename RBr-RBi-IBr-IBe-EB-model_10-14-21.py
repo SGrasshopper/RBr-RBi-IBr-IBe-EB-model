@@ -72,8 +72,8 @@ def init(cell):
     #cell.color = [0.0,0.0,1.0] #blue
     
     #RNA and protein 
-    cell.rnaamt = [0.0,0.0,0.0,0.0] # RNA levels, used, in part, to drive geneamt levels
-    cell.geneamt = [0.0,0.0,0.0,0.0]   #[0]= ectExp, [1]=Euo, [2]=HctA, [3]=HctB
+    cell.rnaamt = [0.0,0.0,0.0,0.0] # RNA levels, used, in part, to drive geneamt levels #[0]= ectExp, [1]=Euo, [2]=HctA, [3]=CtcB, [4]=HctB
+    cell.geneamt = [0.0,0.0,0.0,0.0]   #[0]= ectExp, [1]=Euo, [2]=HctA, [3]=CtcB, [4]=HctB
     
     #EB to RB germination time
     cell.germTime = [(120 + random.uniform(-40,40))] #based on livecell and single cell expansion data: need to measure actually germ time variation and fit to dist
@@ -130,22 +130,26 @@ def update(cells):
         pr0 = 0.0 #RNA production rate of ectExp
         pr1 = 0.02 #RNA production rate of Euo
         pr2 = 0.02 #RNA production rate of HctA
-        pr3 = 0.06 #RNA production rate of HctB
+        pr3 = 0.06 #RNA production rate of CtcB
+        pr4 = 0.06 #RNA production rate of HctB
         nr0 = 0.0 #RNA degredation rate of ectExp
         nr1 = 0.02 #RNA degredation rate of Euo
         nr2 = 0.01 #RNA degredation rate of HctA
-        nr3 = 0.024 #RNA degredation rate of HctB       
+        nr3 = 0.024 #RNA degredation rate of CtcB      
+        nr4 = 0.024 #RNA degredation rate of HctB
 
         #p = protein production rate
         #n = protein degradation rate
         p0 = 0.0  #Protein production rate of ectExp
         p1 = 0.5  #protein production rate of Euo
         p2 = 0.5  #protein production rate of HctA
-        p3 = 0.5  #protein production rate of HctB
+        p3 = 0.5  #protein production rate of CtcB
+        p4 = 0.5  #protein production rate of HctB
         n0 = 0.0  #Protein degredation rate of ectExp
         n1 = 0.08 #protein degredation rate of Euo
         n2 = 0.05 #protein degredation rate of HctA
-        n3 = 0.01 #protein degredation rate of HctB   
+        n3 = 0.01 #protein degredation rate of CtcB   
+        n4 = 0.01 #protein degredation rate of HctB
         
         # For inducion and repression of Ectopicly expressed proteins 
         # Add the expression behaviour to each cell type.
@@ -176,8 +180,9 @@ def update(cells):
             cell.geneamt[1] = cell.geneamt[1] + (p1 * cell.rnaamt[1] * cell.growthRate) - (n1 * cell.geneamt[1] * cell.growthRate) #Euo protein
            
             cell.geneamt[2] = 0 # HctA protein
-           
-            cell.geneamt[3] = 0 # HctB protein
+            cell.geneamt[3] = 0 # CtcB protein
+            cell.geneamt[4] = 0 # HctB protein
+            
             cell.color = [[1/cell.geneamt[1], 1, 1/cell.geneamt[1]]]
             #print('growthRate = ' + str(cell.growthRate))
             #print('percentchance = ' + str(cell.percentchance[0]))
@@ -193,7 +198,7 @@ def update(cells):
                 #cell.geneamt[1] = cell.geneamt[1] + (p1 * cell.growthRate * cell.rnaamt[1]) - (n1 * cell.growthRate * cell.geneamt[1]) #Euo protein
                 #######
                 cell.color = [[1/cell.geneamt[1], 1, 1/cell.geneamt[1]]] # color magic, fix
-        
+        #### MISSING A CELLTYPE
         if  cell.cellType == 2: #RBi
             cell.rnaamt[0] = cell.rnaamt[0] + (pr0 * cell.growthRate) - (nr0 * cell.rnaamt[0] * cell.growthRate) # RNA of ectopic expressed protein
             cell.geneamt[0] = cell.geneamt[0] + (p0 * cell.rnaamt[0] * cell.growthRate) - (n0 * cell.geneamt[0] * cell.growthRate) #Ectopic expresed protein
@@ -210,27 +215,31 @@ def update(cells):
             
             cell.rnaamt[2] = cell.rnaamt[2] + (pr2 * cell.parentGrowth[0]) - (nr2 * cell.rnaamt[2] * cell.parentGrowth[0]) #hctA RNA
             cell.geneamt[2] = cell.geneamt[2] + (p2 * cell.rnaamt[2] * cell.parentGrowth[0]) - (n2 * cell.geneamt[2] * cell.parentGrowth[0]) #hctA link this to Euo levels
+            
+            cell.rnaamt[3] = cell.rnaamt[3] + (pr3 * cell.parentGrowth[0]) - (nr3 * cell.rnaamt[3] * cell.parentGrowth[0]) #ctcB RNA
+            cell.geneamt[3] = cell.geneamt[3] + (p3 * cell.rnaamt[3] * cell.parentGrowth[0]) - (n3 * cell.geneamt[3] * cell.parentGrowth[0]) #CtcB protein
     
             cell.color = [[0, 0, cell.geneamt[2]/100]] #need to fix color
-            if cell.geneamt[2] >= 4: 
+            if cell.geneamt[3] >= 4: 
                 cell.cellType = 4 #IBe
        
         if cell.cellType == 4: #IBe
-            cell.geneamt[2] = cell.geneamt[2] - (n2 * cell.geneamt[2] * cell.parentGrowth[0]) #hctA protein deg
+            cell.geneamt[2] = cell.geneamt[2] - (n2 * cell.geneamt[2] * cell.parentGrowth[0]) #HctA protein deg
+            cell.geneamt[3] = cell.geneamt[3] - (n3 * cell.geneamt[3] * cell.parentGrowth[0]) #CtcB protein deg
             
-            cell.rnaamt[3] = cell.rnaamt[3] + (pr3 * cell.parentGrowth[0]) - (nr3 * cell.rnaamt[3] * cell.parentGrowth[0]) #hctB RNA
-            cell.geneamt[3] = cell.geneamt[3] + (p3 * cell.rnaamt[3] * cell.parentGrowth[0]) - (n3 * cell.geneamt[3] * cell.parentGrowth[0]) #hctB protein
+            cell.rnaamt[4] = cell.rnaamt[4] + (pr4 * cell.parentGrowth[0]) - (nr4 * cell.rnaamt[4] * cell.parentGrowth[0]) #hctB RNA
+            cell.geneamt[4] = cell.geneamt[4] + (p4 * cell.rnaamt[4] * cell.parentGrowth[0]) - (n4 * cell.geneamt[4] * cell.parentGrowth[0]) #HctB protein
             
             #cell.growthRate = 0 # does cell type 3 grow? probably not. Move this up to cell type 3, see if needed
-            cell.color = [[0, 0, cell.geneamt[3]/100]] #need to fix color
-            if cell.geneamt[3] >= 15: #hctB protein
+            cell.color = [[0, 0, cell.geneamt[4]/100]] #need to fix color
+            if cell.geneamt[4] >= 15: #hctB protein
                 cell.cellType = 5 #EB
                     
         if cell.cellType == 5: #EB
             cell.geneamt[2] = cell.geneamt[2] - (n2 * cell.geneamt[2] * cell.parentGrowth[0]) #hctA deg. does this continue the degradation? change rates? why is this here again? see if needed
             
-            cell.rnaamt[3] = cell.rnaamt[3] + (pr3 * cell.parentGrowth[0]) - (nr3 * cell.rnaamt[3] * cell.parentGrowth[0]) #hctB RNA
-            cell.geneamt[3] = cell.geneamt[3] + (p3 * cell.rnaamt[3] * cell.parentGrowth[0]) - (n3 * cell.geneamt[3] * cell.parentGrowth[0]) #hctB protein
+            cell.rnaamt[4] = cell.rnaamt[4] + (pr4 * cell.parentGrowth[0]) - (nr4 * cell.rnaamt[4] * cell.parentGrowth[0]) #hctB RNA
+            cell.geneamt[4] = cell.geneamt[4] + (p4 * cell.rnaamt[4] * cell.parentGrowth[0]) - (n4 * cell.geneamt[4] * cell.parentGrowth[0]) #hctB protein
             
             cell.color = [2.0, 0.0, 0.5]
             
