@@ -203,11 +203,11 @@ def update(cells):
             p3 = 0.5  #protein production rate of CtcB
             n3 = 0.01 #protein degredation rate of CtcB
             
-            #while time < 100000: # this does not work it stays in the loop until done.  Duh.  need if statments to check and recheck everytime.
-                #pr0 = 0.0 #RNA production rate of ectExp
-                #nr0 = 0.0 #RNA degredation rate of ectExp
-                #p0 = 0.0  #Protein production rate of ectExp
-                #n0 = 0.0  #Protein degredation rate of ectExp
+            if time < 100000:
+                pr0 = 0.0 #RNA production rate of ectExp
+                nr0 = 0.0 #RNA degredation rate of ectExp
+                p0 = 0.0  #Protein production rate of ectExp
+                n0 = 0.0  #Protein degredation rate of ectExp
             
             cell.rnaamt[0] = cell.rnaamt[0] + (pr0 * cell.parentGrowth[0]) - (nr0 * cell.rnaamt[0]) # RNA of ectopic expressed protein
             cell.geneamt[0] = cell.geneamt[0] + (p0 * cell.rnaamt[0] * cell.parentGrowth[0]) - (n0 * cell.geneamt[0]) #Ectopic expresed protein
