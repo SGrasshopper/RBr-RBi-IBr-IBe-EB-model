@@ -164,7 +164,7 @@ def update(cells):
                 
         if cell.cellType == 1: #RBr
         	
-        	#I guess you are using RNA->protein to do your math?
+        	#I guess you are using RNA->protein to do your math? (pP(pRNA)-nP(nRNA))?
             cell.rnaamt[0] = cell.rnaamt[0] + (pr0 * cell.growthRate) - (nr0 * cell.rnaamt[0] * cell.growthRate) # RNA of ectopic expressed protein
             cell.geneamt[0] = cell.geneamt[0] + (p0 * cell.growthRate * cell.rnaamt[0]) - (n0 * cell.growthRate * cell.geneamt[0]) #Ectopic expresed protein
             
