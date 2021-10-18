@@ -123,42 +123,7 @@ def update(cells):
             #cell.percentchance[0] = (96.45042921/(1 + numpy.exp((13.60222209-time2)*1.4553212)) + 1.68390956)#early RBi counts
         #print('growthRate = ' + str(cell.growthRate))
         #print('percentchance = ' + str(cell.percentchance[0]))
-        
-        # add if statement controlling rates based on time
-        #pr = RNA production rate
-        #nr = RNA degradation rate
-        pr0 = 0.0 #RNA production rate of ectExp
-        pr1 = 0.02 #RNA production rate of Euo
-        pr2 = 0.02 #RNA production rate of HctA
-        pr3 = 0.06 #RNA production rate of CtcB
-        pr4 = 0.06 #RNA production rate of HctB
-        nr0 = 0.0 #RNA degredation rate of ectExp
-        nr1 = 0.02 #RNA degredation rate of Euo
-        nr2 = 0.01 #RNA degredation rate of HctA
-        nr3 = 0.024 #RNA degredation rate of CtcB      
-        nr4 = 0.024 #RNA degredation rate of HctB
 
-        #p = protein production rate
-        #n = protein degradation rate
-        p0 = 0.0  #Protein production rate of ectExp
-        p1 = 0.5  #protein production rate of Euo
-        p2 = 0.5  #protein production rate of HctA
-        p3 = 0.5  #protein production rate of CtcB
-        p4 = 0.5  #protein production rate of HctB
-        n0 = 0.0  #Protein degredation rate of ectExp
-        n1 = 0.08 #protein degredation rate of Euo
-        n2 = 0.05 #protein degredation rate of HctA
-        n3 = 0.01 #protein degredation rate of CtcB   
-        n4 = 0.01 #protein degredation rate of HctB
-        
-        # For inducion and repression of Ectopicly expressed proteins 
-        # Add the expression behaviour to each cell type.
-        while time > 100000:
-            pr0 = 0.0 #RNA production rate of ectExp
-            nr0 = 0.0 #RNA degredation rate of ectExp
-            p0 = 0.0  #Protein production rate of ectExp
-            n0 = 0.0  #Protein degredation rate of ectExp
-        
         if cell.volume > cell.targetVol:
             cell.divideFlag = True
             
@@ -170,6 +135,15 @@ def update(cells):
                 cell.growthRate = 1.0 + random.uniform(-0.05,0.05)
                 
         if cell.cellType == 1: #RBr
+            pr0 = 0.0 #RNA production rate of ectExp
+            nr0 = 0.0 #RNA degredation rate of ectExp
+            p0 = 0.0  #Protein production rate of ectExp
+            n0 = 0.0  #Protein degredation rate of ectExp
+            
+            pr1 = 0.02 #RNA production rate of Euo
+            nr1 = 0.02 #RNA degredation rate of Euo
+            p1 = 0.5  #protein production rate of Euo
+            n1 = 0.08 #protein degredation rate of Euo
         	
         	#I guess you are using RNA->protein to do your math? pP(pRNA)-nP(nRNA)?
             cell.rnaamt[0] = cell.rnaamt[0] + (pr0 * cell.growthRate) - (nr0 * cell.rnaamt[0]) # RNA of ectopic expressed protein
@@ -194,18 +168,51 @@ def update(cells):
                 cell.cellType = 2 #RBi conversion
                 cell.color = [[1/cell.geneamt[1], 1, 1/cell.geneamt[1]]] # color magic, fix
         
-        if  cell.cellType == 2: #RBi
+        if  cell.cellType == 2: #RBi 
+            pr0 = 0.0 #RNA production rate of ectExp
+            nr0 = 0.0 #RNA degredation rate of ectExp
+            p0 = 0.0  #Protein production rate of ectExp
+            n0 = 0.0  #Protein degredation rate of ectExp
+            
+            pr1 = 0.02 #RNA production rate of Euo
+            nr1 = 0.02 #RNA degredation rate of Euo
+            p1 = 0.5  #protein production rate of Euo
+            n1 = 0.08 #protein degredation rate of Euo
+            
             cell.rnaamt[0] = cell.rnaamt[0] + (pr0 * cell.growthRate) - (nr0 * cell.rnaamt[0]) # RNA of ectopic expressed protein
             cell.geneamt[0] = cell.geneamt[0] + (p0 * cell.rnaamt[0] * cell.growthRate) - (n0 * cell.geneamt[0]) #Ectopic expresed protein
             
             cell.rnaamt[1] = cell.rnaamt[1] + (pr1 * cell.growthRate) - (nr1 * cell.rnaamt[1]) #Euo RNA
             cell.geneamt[1] = cell.geneamt[1] + (p1 * cell.rnaamt[1] * cell.growthRate) - (n1 * cell.geneamt[1]) #Euo protein 
             
-        if  cell.cellType == 3:
-            pr1 = 0.0
-            p1 = 0.0
+        if  cell.cellType == 3: #IBr   
+            #need to add Euo inhibition of HctA. High Euo blocks HctA production. Inherit high Euo and have it degrade fast. Turn on HctA at low levels of Euo.
+            pr0 = 0.0 #RNA production rate of ectExp
+            nr0 = 0.0 #RNA degredation rate of ectExp
+            p0 = 0.0  #Protein production rate of ectExp
+            n0 = 0.0  #Protein degredation rate of ectExp
             
-            #IBr   #need to add Euo inhibition of HctA. High Euo blocks HctA production. Inherit high Euo and have it degrade fast. Turn on HctA at low levels of Euo.
+            pr1 = 0.02 #RNA production rate of Euo
+            nr1 = 0.02 #RNA degredation rate of Euo
+            p1 = 0.5  #protein production rate of Euo
+            n1 = 0.08 #protein degredation rate of Euo
+            
+            pr2 = 0.02 #RNA production rate of HctA
+            nr2 = 0.01 #RNA degredation rate of HctA
+            p2 = 0.5  #protein production rate of HctA
+            n2 = 0.05 #protein degredation rate of HctA
+            
+            pr3 = 0.06 #RNA production rate of CtcB
+            nr3 = 0.024 #RNA degredation rate of CtcB
+            p3 = 0.5  #protein production rate of CtcB
+            n3 = 0.01 #protein degredation rate of CtcB
+            
+            while time < 100000:
+                pr0 = 0.0 #RNA production rate of ectExp
+                nr0 = 0.0 #RNA degredation rate of ectExp
+                p0 = 0.0  #Protein production rate of ectExp
+                n0 = 0.0  #Protein degredation rate of ectExp
+            
             cell.rnaamt[0] = cell.rnaamt[0] + (pr0 * cell.parentGrowth[0]) - (nr0 * cell.rnaamt[0]) # RNA of ectopic expressed protein
             cell.geneamt[0] = cell.geneamt[0] + (p0 * cell.rnaamt[0] * cell.parentGrowth[0]) - (n0 * cell.geneamt[0]) #Ectopic expresed protein
 
@@ -223,6 +230,21 @@ def update(cells):
                 cell.cellType = 4 #IBe
        
         if cell.cellType == 4: #IBe
+            pr2 = 0.02 #RNA production rate of HctA
+            nr2 = 0.01 #RNA degredation rate of HctA
+            p2 = 0.5  #protein production rate of HctA
+            n2 = 0.05 #protein degredation rate of HctA
+            
+            pr3 = 0.06 #RNA production rate of CtcB
+            nr3 = 0.024 #RNA degredation rate of CtcB
+            p3 = 0.5  #protein production rate of CtcB
+            n3 = 0.01 #protein degredation rate of CtcB
+            
+            pr4 = 0.06 #RNA production rate of HctB      
+            nr4 = 0.024 #RNA degredation rate of HctB  
+            p4 = 0.5  #protein production rate of HctB           
+            n4 = 0.01 #protein degredation rate of HctB
+            
             cell.geneamt[2] = cell.geneamt[2] - (n2 * cell.geneamt[2]) #HctA protein deg
             cell.geneamt[3] = cell.geneamt[3] - (n3 * cell.geneamt[3]) #CtcB protein deg
             
@@ -235,7 +257,10 @@ def update(cells):
                 cell.cellType = 5 #EB
                     
         if cell.cellType == 5: #EB
-            cell.geneamt[2] = cell.geneamt[2] - (n2 * cell.geneamt[2]) #hctA deg. does this continue the degradation? change rates? why is this here again? see if needed
+            pr4 = 0.06 #RNA production rate of HctB      
+            nr4 = 0.024 #RNA degredation rate of HctB  
+            p4 = 0.5  #protein production rate of HctB           
+            n4 = 0.01 #protein degredation rate of HctB
             
             cell.rnaamt[4] = cell.rnaamt[4] + (pr4 * cell.parentGrowth[0]) - (nr4 * cell.rnaamt[4]) #hctB RNA
             cell.geneamt[4] = cell.geneamt[4] + (p4 * cell.rnaamt[4] * cell.parentGrowth[0]) - (n4 * cell.geneamt[4]) #hctB protein
