@@ -207,13 +207,19 @@ def update(cells): #Iterate through each cell update and flag cells that reach t
                 p0 = 0.0  #Protein production rate of ectExp
                 n0 = 0.0  #Protein degredation rate of ectExp
             
+            if cell.geneamt[0] > 10:
+                pr1 = 0.02 #RNA production rate of Euo
+                nr1 = 0.02 #RNA degredation rate of Euo
+                p1 = 0.5  #protein production rate of Euo
+                n1 = 0.08 #protein degredation rate of Euo
+            
             cell.rnaamt[0] = cell.rnaamt[0] + (pr0 * cell.parentGrowth[0]) - (nr0 * cell.rnaamt[0]) # RNA of ectopic expressed protein
             cell.geneamt[0] = cell.geneamt[0] + (p0 * cell.rnaamt[0] * cell.parentGrowth[0]) - (n0 * cell.geneamt[0]) #Ectopic expresed protein
 
             cell.rnaamt[1] = cell.rnaamt[1] + (pr1 * cell.parentGrowth[0]) - (nr1 * cell.rnaamt[1]) #Euo RNA
             cell.geneamt[1] = cell.geneamt[1] + (p1 * cell.rnaamt[1] * cell.parentGrowth[0]) - (n1 * cell.geneamt[1]) #Euo protein 
             
-            if cell.geneamt[1] > 3 # High Euo blocks expression of HctA and CtcB
+            if cell.geneamt[1] > 3: # High Euo blocks expression of HctA and CtcB
                 pr2 = 0.0 #RNA production rate of HctA
                 nr2 = 0.0 #RNA degredation rate of HctA
                 p2 = 0.0  #protein production rate of HctA
