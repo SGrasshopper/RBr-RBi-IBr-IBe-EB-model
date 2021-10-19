@@ -213,6 +213,17 @@ def update(cells): #Iterate through each cell update and flag cells that reach t
             cell.rnaamt[1] = cell.rnaamt[1] + (pr1 * cell.parentGrowth[0]) - (nr1 * cell.rnaamt[1]) #Euo RNA
             cell.geneamt[1] = cell.geneamt[1] + (p1 * cell.rnaamt[1] * cell.parentGrowth[0]) - (n1 * cell.geneamt[1]) #Euo protein 
             
+            if cell.geneamt[1] > 3 # High Euo blocks expression of HctA and CtcB
+                pr2 = 0.0 #RNA production rate of HctA
+                nr2 = 0.0 #RNA degredation rate of HctA
+                p2 = 0.0  #protein production rate of HctA
+                n2 = 0.0 #protein degredation rate of HctA
+            
+                pr3 = 0.0 #RNA production rate of CtcB
+                nr3 = 0.0 #RNA degredation rate of CtcB
+                p3 = 0.0  #protein production rate of CtcB
+                n3 = 0.0 #protein degredation rate of CtcB
+            
             cell.rnaamt[2] = cell.rnaamt[2] + (pr2 * cell.parentGrowth[0]) - (nr2 * cell.rnaamt[2]) #hctA RNA
             cell.geneamt[2] = cell.geneamt[2] + (p2 * cell.rnaamt[2] * cell.parentGrowth[0]) - (n2 * cell.geneamt[2]) #hctA link this to Euo levels
             
