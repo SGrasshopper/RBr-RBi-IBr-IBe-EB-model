@@ -240,6 +240,7 @@ def update(cells): #Iterate through each cell update and flag cells that reach t
             n4 = 0.01 #protein degredation rate of HctB
             
             cell.geneamt[2] = cell.geneamt[2] - (n2 * cell.geneamt[2]) #HctA protein deg
+            
             cell.geneamt[3] = cell.geneamt[3] - (n3 * cell.geneamt[3]) #CtcB protein deg
             
             cell.rnaamt[4] = cell.rnaamt[4] + (pr4 * cell.parentGrowth[0]) - (nr4 * cell.rnaamt[4]) #hctB RNA
