@@ -143,7 +143,7 @@ def update(cells): #Iterate through each cell update and flag cells that reach t
             p1 = 0.5  #protein production rate of Euo
             n1 = 0.08 #protein degredation rate of Euo
         	
-        	#I guess you are using RNA->protein to do your math? pP(pRNA)-nP(nRNA)?
+        	#I guess you are using RNA->protein to do your math? pP*pRNA-nP*nRNA?
             cell.rnaamt[0] = cell.rnaamt[0] + (pr0 * cell.growthRate) - (nr0 * cell.rnaamt[0]) # RNA of ectopic expressed protein
             cell.geneamt[0] = cell.geneamt[0] + (p0 * cell.rnaamt[0] * cell.growthRate) - (n0 * cell.geneamt[0]) #Ectopic expresed protein
             
