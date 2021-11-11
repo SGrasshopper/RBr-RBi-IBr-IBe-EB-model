@@ -18,6 +18,9 @@ class CellState:
         self.rnaamt = []
         self.geneamt = []
         self.parentGrowth = []
+        self.parentAge = []
         self.geneCon = []
         self.germTime = []
         self.RBeTrig = []
+        self.coinflip = 0
+        self.percentchance = []
