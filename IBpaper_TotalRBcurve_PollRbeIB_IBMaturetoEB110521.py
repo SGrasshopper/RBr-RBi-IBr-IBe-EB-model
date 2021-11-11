@@ -122,7 +122,6 @@ def update(cells):
     time2 = (time/10)
     print('time = ' + str(time))
     print('time2 = ' + str(time2)) 
-    #print('time = ' + str(time)) 
 
     #Iterate through each cell and flag cells that reach target size for division
     
@@ -135,8 +134,6 @@ def update(cells):
             #cell.percentchance[0] = (105/(1 + numpy.exp((1.76663094e+01-time2)*3.77251916e-01)) - 5) #on singlecell LVA counts
             cell.percentchance[0] = (97.81/(1 + numpy.exp((2.15841312e+01-((time2*cell.growthRate)))*6.77630536e-01)) + 2.19) #on livecell data and early RBe counts, percent chance of RB conversion
             #cell.percentchance[0] = (96.45042921/(1 + numpy.exp((13.60222209-time2)*1.4553212)) + 1.68390956)#early RBe counts
-        #print('growthRate = ' + str(cell.growthRate))
-        #print('percentchance = ' + str(cell.percentchance[0]))
         
         
         #pr = RNA production rate
@@ -204,7 +201,7 @@ def update(cells):
                 #cell.geneamt[2] = 0 # HctA
                 #cell.geneamt[3] = 0 # HctB
             
-        #if cell.cellType == 1 and time2 >= 30: #RBr
+        #if cell.cellType == 1 and time2 >= 30: #RBr stop divide for CDI model
         #    cell.cellType = 6
         #    cell.color = [[1/cell.geneamt[1], 1, 1/cell.geneamt[1]]]
         #    cell.growthRate = 0    
@@ -219,7 +216,7 @@ def update(cells):
             #cell.geneamt[2] = 0 # HctA
             #cell.geneamt[3] = 0 # HctB
             
-            #if time2 >= 30: #RBe dead #works well if specified as different celltype 
+            #if time2 >= 30: #RBe stop divide for CDI model
             #    cell.cellType = 6
             #    cell.color = [[1/cell.geneamt[1], 1, 1/cell.geneamt[1]]]
             #    cell.growthRate = 0
@@ -271,14 +268,12 @@ def divide(parent, d1, d2):
     
     if parent.cellType == 1: # If RBr: make 2RBrs
         d1.cellType = 1
-        d1.targetVol = 2 #* numpy.random.normal(1, 0.05)
+        d1.targetVol = 2
         d1.growthRate = parent.parentGrowth[0] * numpy.random.normal(1, 0.05)
-        #d1.percentchance[1] = parent.percentchance[1]
        
         d2.cellType = 1
         d2.targetVol = 2 #* numpy.random.normal(1, 0.05)
         d2.growthRate = parent.parentGrowth[0] * numpy.random.normal(1, 0.05)
-        #d2.percentchance[1] = parent.percentchance[1]
         
         d1.geneamt[0] = parent.geneamt[0]/2
         d2.geneamt[0] = parent.geneamt[0]/2
@@ -288,7 +283,7 @@ def divide(parent, d1, d2):
 
     if parent.cellType == 2: # If RBe: make 1RBe, 1IB
         d1.cellType = 2
-        d1.targetVol = 2 #* numpy.random.normal(1, 0.05)
+        d1.targetVol = 2 
         d1.growthRate = parent.parentGrowth[0] * numpy.random.normal(1, 0.05)
         
         d2.cellType = 3
@@ -301,13 +296,10 @@ def divide(parent, d1, d2):
         d1.geneamt[1] = parent.geneamt[1]/2
         d2.geneamt[1] = parent.geneamt[1]/2 
         
-        
-    #print('p1 = ' + str(parent.geneamt[0]))
-    #print('d1.percentchance[1] =' + str(d1.percentchance[1]))
-    #print('d2.percentchance[1] =' + str(d2.percentchance[1]))         
+               
 
 
-#this model: GermEB lavendar, Rbr green, Rbe green, IB black, EB  hot pink
+#this model: GermEB lavendar, Rbr green, Rbe green, IB blue>black>red, EB  hot pink
 
 
 # Rbr matures into Rbe based on percentchance curve from empirical data
