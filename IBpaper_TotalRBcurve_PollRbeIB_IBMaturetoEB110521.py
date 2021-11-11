@@ -84,7 +84,7 @@ def init(cell):
     
     #RNA and protein 
     cell.rnaamt = [0,0,0,0] # RNA levels, used, in part, to drive geneamt levels
-    cell.geneamt = [0.0, 0.0, 0.0, 0.0]   #[0]= magic Rbr>RBe signal, [1]=Euo, [2]=HctA, [3]=HctB
+    cell.geneamt = [0.0, 0.0, 0.0, 0.0]   #[0]= hctA-GFP, [1]=Euo, [2]=HctA, [3]=HctB
     
     #EB to RB germination time
     cell.germTime = [(100 + random.uniform(-20,20))] #based on livecell and single cell expansion data: need to measure actually germ time variation and fit to dist
@@ -125,7 +125,7 @@ def update(cells):
 
     #Iterate through each cell and flag cells that reach target size for division
     
-    # Celltypes: 0=germ_EB, 1=RBr, 2=RBe, 3=IB, 4=pre_EB, 5=EB
+    # Celltypes: 0=germ_EB, 1=RBr, 2=RBe, 3=IB, 4=pre_EB, 5=EB, 6=non-dividing RBs
 
     for (id, cell) in cells.items():
     
