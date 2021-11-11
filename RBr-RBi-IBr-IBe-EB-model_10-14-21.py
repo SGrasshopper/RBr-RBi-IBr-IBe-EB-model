@@ -18,7 +18,7 @@ from CellModeller.Signalling.GridDiffusion import GridDiffusion
 #pip install pyopencl
 
 max_cells = 2**15
-
+#test
 #Specify parameter for solving diffusion dynamics #Add
 grid_size = (4, 4, 4) # grid size
 grid_dim = (64, 8, 12) # dimension of diffusion space, unit = number of grid
