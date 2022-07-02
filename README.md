@@ -12,5 +12,5 @@ IB starts with hctA == 0, matures to EB(celltype == 5), based on HctB accumulati
 ISSUES WITH CURRENT MODEL
 Curently gene expression controls cell type and this is good.  
 But would like to make gene expression controlling gene expression 
-[Euo] should inversely control [HctA] and [CtcB] and use hctAfeedback
+[Euo] should inversely control [HctA] and [CtcB] and use hctA feedback to repress [Euo]
 [ctcB] should control [hctB] and [hctB] should repress everthing.
