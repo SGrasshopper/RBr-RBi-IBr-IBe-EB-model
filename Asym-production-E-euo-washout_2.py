@@ -7,6 +7,7 @@ from CellModeller.Integration.CLCrankNicIntegrator import CLCrankNicIntegrator
 from CellModeller.Integration.CLEulerSigIntegrator import CLEulerSigIntegrator
 from CellModeller.Signalling.GridDiffusion import GridDiffusion 
 from CellModeller.Integration.CLEulerIntegrator import CLEulerIntegrator
+from CellModeller.GUI import Renderers
 
 #Launch Code: python Scripts/CellModellerGUI.py
 #Launch Code Batch: python Scripts/batch.py
@@ -20,38 +21,23 @@ grid_size = (4, 4, 4) # grid size
 grid_dim = (64, 8, 12) # dimension of diffusion space, unit = number of grid
 grid_orig = (-128, -14, -8) # where to place the diffusion space onto simulation space
 
+
 def setup(sim):
-
     # Set biophysics, signalling, and regulation models
-    # jitter turns on 3d
-    # gamma controls growth inhibition from neighbors
     biophys = CLBacterium(sim, max_cells=max_cells, jitter_z=False)
+    integ = CLEulerIntegrator(sim, 2, max_cells) # 2 is for number of spec
 
-    # add the planes to set physical  boundaries of cell growth
-    #biophys.addPlane((0,-16,0), (0,1,0), 1)
-    #biophys.addPlane((0,16,0), (0,-1,0), 1)
-    sig = GridDiffusion(sim, 1, grid_dim, grid_size, grid_orig, [10.0])
-
-    # Here we set up the numerical integration:
-    # Crank-Nicholson method:
-    #integ = CLCrankNicIntegrator(sim, 1, 4, max_cells, sig, boundcond='reflect')
-    # Alternative is to use the simple forward Euler method:
-    integ = CLEulerSigIntegrator(sim, 1, 3, max_cells, sig, boundcond='reflect') # 1 is the cell type the 3 is for number of signals
     # use this file for reg too
-    regul = ModuleRegulator(sim, sim.moduleName)    
+    regul = ModuleRegulator(sim)
     # Only biophys and regulation
-    sim.init(biophys, regul, sig, integ)
+    sim.init(biophys, regul, None, integ)
 
     # Specify the initial cell and its location in the simulation
     sim.addCell(cellType=0, pos=(0,0,0)) 
-    if sim.is_gui:
 
-        # Add some objects to draw the models
-        from CellModeller.GUI import Renderers
-        therenderer = Renderers.GLBacteriumRenderer(sim)
-        sim.addRenderer(therenderer)
-        #sigrend = Renderers.GLGridRenderer(sig, integ)
-        #sim.addRenderer(sigrend) #Add
+    # Add some objects to draw the models
+    therenderer = Renderers.GLBacteriumRenderer(sim)
+    sim.addRenderer(therenderer)
 
     sim.pickleSteps = 10
     
@@ -81,27 +67,22 @@ def init(cell):
     cell.percentchance = [0,0] #curve that drives RBr > RBe conversion
 
     #Specify initial concentration of chemical 
-    cell.species[:] = [1,1,0] #species is concentration, normal per cell = * volume
-    cell.signals[:] = [0.0]
+    cell.species[:] = [0,0] #species is concentration, normal per cell = * volume
+    #cell.signals[:] = [0.0]
 
 def specRateCL(): # Signal adds at rate k0
     return '''
     const float k0 = 20.0f;
     const float d0 = 0.0f;
-    const float k1 = 200.0f;
+
+    const float k1 = 20.0f;
     const float d1 = 0.0f;
-    
+
     float x0 = species[0];
     float x1 = species[1];
-    
-    if (cellType==0){
+
     rates[0] = k0 - d0*x0;
-    rates[1] = k0 - d1*x1;
-    } 
-    else {
-    rates[0] = k1 - d0*x0;
     rates[1] = k1 - d1*x1;
-    }
     '''
     # k0 = production rate of x0
     # 10.0f adds 0.5 every update step
@@ -110,12 +91,13 @@ def specRateCL(): # Signal adds at rate k0
     # 200.0f adds 10 every update step
     # d0 = degradation rate of x0
 
-def sigRateCL(): #Add
-    return '''
-    const float k1 = 1.0f;
-    float x0 = signals[0];
-    rates[0] = k1;
-    ''' 
+#def sigRateCL(): #Add
+#    return '''
+#    const float k1 = 1.0f;
+#    float x0 = signals[0];
+#    rates[0] = k1;
+#    ''' 
+    
 time = 0
 def update(cells):
     global time
@@ -126,6 +108,7 @@ def update(cells):
     # Iterate through each cell
     for (id, cell) in cells.items():
         print('cell sp = ' + str(cell.species[1]))
+        print('cell sp norm = ' + str(cell.species[1]*cell.volume))
         print('time = '+ str(time))
     
         if time >= cell.germTime[0]:
